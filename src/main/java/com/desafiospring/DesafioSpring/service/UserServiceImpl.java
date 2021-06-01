@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -28,13 +31,13 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.getUser(idUser);
         User userSeller = userRepository.getUser(idSeller);
 
-        if(!userSeller.getSeller()){
-            return new ResponseEntity<>("O usuário com ID " + idSeller + " não é um vendedor. Usuários podem seguir apenas vendedores.", HttpStatus.BAD_REQUEST);
-        }
         if(userSeller == null)
             return new ResponseEntity<>("Nenhum vendendor encontrado com o ID "+ idSeller, HttpStatus.BAD_REQUEST);
         if(user == null)
             return new ResponseEntity<>("Nenhum usuário encontrado com o ID "+ idUser, HttpStatus.BAD_REQUEST);
+        if(!userSeller.getSeller()){
+            return new ResponseEntity<>("O usuário com ID " + idSeller + " não é um vendedor. Usuários podem seguir apenas vendedores.", HttpStatus.BAD_REQUEST);
+        }
         if(userHasFollowedAlready(user, idSeller) != null)
             return new ResponseEntity<>("Usuário já segue esse vendedor.", HttpStatus.OK);
 
@@ -47,14 +50,17 @@ public class UserServiceImpl implements UserService{
     @Override
     public ResponseEntity followersCounter(int idUser) {
         User user = userRepository.getUser(idUser);
+        List<User> usersList = userRepository.getUsers();
 
         if(user == null)
             return new ResponseEntity<String>("Nenhum usuário foi encontrado com esse ID.", HttpStatus.BAD_REQUEST);
+        if(!user.getSeller())
+            return new ResponseEntity<String>("Usuário não é um vendedor. Insira o ID de um vendedor.", HttpStatus.BAD_REQUEST);
 
         FollowersCounterDTO followersCounterDTO = new FollowersCounterDTO();
         followersCounterDTO.setUserId(user.getUserId());
         followersCounterDTO.setUserName(user.getUserName());
-        followersCounterDTO.setFollowers_count(user.getFollowingList().size());
+        followersCounterDTO.setFollowers_count((int) usersList.stream().filter(u -> u.getFollowingList().contains(idUser)).count());
 
         return new ResponseEntity<FollowersCounterDTO>(followersCounterDTO, HttpStatus.OK);
     }
