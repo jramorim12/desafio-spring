@@ -1,0 +1,10 @@
+[
+
+  {"product_id" : 1,
+  "productName" : "Produto 01",
+  "type" : "Eletrônico",
+  "brand" : "Marca do Produto 01",
+  "color" : "Azul",
+  "note" : "Notas sobre o produto" }
+
+]

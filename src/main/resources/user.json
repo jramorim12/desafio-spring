@@ -1,0 +1,14 @@
+[
+  {
+    "userId" : 1,
+    "userName" : "Usuário 01",
+    "followingList" : [],
+    "seller" : false
+  },
+  {
+    "userId" : 2,
+    "userName" : "Usuário 02",
+    "followingList" : [],
+    "seller" : true
+  }
+]
