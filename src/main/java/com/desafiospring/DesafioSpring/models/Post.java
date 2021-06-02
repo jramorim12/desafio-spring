@@ -1,16 +1,24 @@
-package com.desafiospring.DesafioSpring.entity;
+package com.desafiospring.DesafioSpring.models;
 
+import com.desafiospring.DesafioSpring.utils.CustomJsonDateDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Post {
     private int id_post;
     private int userId;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date date;
     private Product detail;
     private int category;
     private double price;
-    private boolean hasPromo;
-    private double discount;
+    private boolean hasPromo = false;
+    private double discount = 0.0;
 
     public Post(int id_post, int userId, Date date, Product detail, int category, double price, boolean hasPromo, double discount) {
         this.id_post = id_post;
@@ -41,10 +49,13 @@ public class Post {
         this.userId = userId;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate() {
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyy");
+        return formatter.format(date);
+
     }
 
+    @JsonDeserialize(using = CustomJsonDateDeserializer.class)
     public void setDate(Date date) {
         this.date = date;
     }

@@ -1,6 +1,5 @@
 package com.desafiospring.DesafioSpring.controller;
 
-import com.desafiospring.DesafioSpring.dtos.FollowersCounterDTO;
 import com.desafiospring.DesafioSpring.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private UserService userService;
-
 
     public UserController(UserService userService) {
         this.userService = userService;

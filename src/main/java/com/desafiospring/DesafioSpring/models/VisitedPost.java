@@ -1,4 +1,4 @@
-package com.desafiospring.DesafioSpring.entity;
+package com.desafiospring.DesafioSpring.models;
 
 import java.util.Date;
 

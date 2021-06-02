@@ -4,15 +4,13 @@ import com.desafiospring.DesafioSpring.dtos.FollowedListDTO;
 import com.desafiospring.DesafioSpring.dtos.FollowersCounterDTO;
 import com.desafiospring.DesafioSpring.dtos.FollowersListDTO;
 import com.desafiospring.DesafioSpring.dtos.UserInfoDTO;
-import com.desafiospring.DesafioSpring.entity.User;
+import com.desafiospring.DesafioSpring.models.User;
 import com.desafiospring.DesafioSpring.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

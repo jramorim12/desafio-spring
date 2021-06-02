@@ -1,1 +1,1 @@
-[{"userId":2,"userName":"Usuário 02","followingList":[],"seller":true},{"userId":1,"userName":"Usuário 01","followingList":[2],"seller":false}]
+[{"userId":2,"userName":"Usuário 02","followingList":[1],"seller":true},{"userId":1,"userName":"Usuário 01","followingList":[2],"seller":false}]

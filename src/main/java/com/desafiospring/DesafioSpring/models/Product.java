@@ -1,4 +1,4 @@
-package com.desafiospring.DesafioSpring.entity;
+package com.desafiospring.DesafioSpring.models;
 
 public class Product {
     private int product_id;

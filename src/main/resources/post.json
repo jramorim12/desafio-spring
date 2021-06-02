@@ -2,7 +2,7 @@
   {
     "id_post" : 1,
     "userId" : 2,
-    "date" : "01/06/2021",
+    "date" : "01-06-2021",
     "detail" :   {"product_id" : 1,
                   "productName" : "Produto 01",
                   "type" : "Eletrônico",

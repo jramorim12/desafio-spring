@@ -1,9 +1,7 @@
 package com.desafiospring.DesafioSpring.repository;
 
-import com.desafiospring.DesafioSpring.entity.User;
-import org.springframework.http.ResponseEntity;
+import com.desafiospring.DesafioSpring.models.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface UserRepository {
