@@ -1,6 +1,9 @@
 package com.desafiospring.DesafioSpring.service;
 
+import com.desafiospring.DesafioSpring.dtos.FollowedListDTO;
 import com.desafiospring.DesafioSpring.dtos.FollowersCounterDTO;
+import com.desafiospring.DesafioSpring.dtos.FollowersListDTO;
+import com.desafiospring.DesafioSpring.dtos.UserInfoDTO;
 import com.desafiospring.DesafioSpring.entity.User;
 import com.desafiospring.DesafioSpring.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -8,8 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -63,5 +68,54 @@ public class UserServiceImpl implements UserService{
         followersCounterDTO.setFollowers_count((int) usersList.stream().filter(u -> u.getFollowingList().contains(idUser)).count());
 
         return new ResponseEntity<FollowersCounterDTO>(followersCounterDTO, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity followersList(int idUser) {
+        User user = userRepository.getUser(idUser);
+        List<User> usersList = userRepository.getUsers();
+
+        if(user == null)
+            return new ResponseEntity<String>("Nenhum usuário foi encontrado com esse ID.", HttpStatus.BAD_REQUEST);
+        if(!user.getSeller())
+            return new ResponseEntity<String>("Usuário não é um vendedor. Insira o ID de um vendedor.", HttpStatus.BAD_REQUEST);
+
+        FollowersListDTO followersListDTO = new FollowersListDTO();
+        followersListDTO.setUserId(user.getUserId());
+        followersListDTO.setUserName(user.getUserName());
+        ArrayList<UserInfoDTO> userList = new ArrayList<>();
+        List<User> auxList = new ArrayList<>();
+        auxList = usersList.stream().filter(u -> u.getFollowingList().contains(idUser)).collect(Collectors.toList());
+
+        for(User u : auxList){
+            userList.add(new UserInfoDTO(u.getUserId(), u.getUserName()));
+        }
+
+        followersListDTO.setFollowers(userList);
+
+        return new ResponseEntity<FollowersListDTO>(followersListDTO, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity followedList(int idUser) {
+        User user = userRepository.getUser(idUser);
+        List<User> usersList = userRepository.getUsers();
+
+        if(user == null)
+            return new ResponseEntity<String>("Nenhum usuário foi encontrado com esse ID.", HttpStatus.BAD_REQUEST);
+
+        FollowedListDTO followedListDTO = new FollowedListDTO();
+        followedListDTO.setUserId(user.getUserId());
+        followedListDTO.setUserName(user.getUserName());
+        ArrayList<UserInfoDTO> userList = new ArrayList<>();
+
+        for(Integer id : user.getFollowingList()){
+            User auxUser = userRepository.getUser(id);
+            userList.add(new UserInfoDTO(auxUser.getUserId(), auxUser.getUserName()));
+        }
+
+        followedListDTO.setFollowed(userList);
+
+        return new ResponseEntity<FollowedListDTO>(followedListDTO, HttpStatus.OK);
     }
 }

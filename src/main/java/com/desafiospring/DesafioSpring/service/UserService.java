@@ -5,5 +5,8 @@ import org.springframework.http.ResponseEntity;
 
 public interface UserService {
     ResponseEntity<String> followSeller(int idUser, int idSeller);
-    ResponseEntity<FollowersCounterDTO> followersCounter(int idUser);
+    ResponseEntity followersCounter(int idUser);
+    ResponseEntity followersList(int idUser);
+    ResponseEntity followedList(int idUser);
+
 }

@@ -33,4 +33,14 @@ public class UserController {
         return userService.followersCounter(userId);
     }
 
+    @GetMapping("/users/{userId}/followers/list")
+    public ResponseEntity followersList(@PathVariable int userId){
+        return userService.followersList(userId);
+    }
+
+    @GetMapping("/users/{userId}/followed/list")
+    public ResponseEntity followedList(@PathVariable int userId){
+        return userService.followedList(userId);
+    }
+
 }
