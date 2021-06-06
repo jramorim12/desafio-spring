@@ -52,7 +52,10 @@ public class Post {
     public String getDate() {
         DateFormat formatter = new SimpleDateFormat("dd-MM-yyy");
         return formatter.format(date);
+    }
 
+    public Date returnDate() {
+        return date;
     }
 
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)

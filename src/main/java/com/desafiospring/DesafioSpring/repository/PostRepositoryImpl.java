@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
@@ -61,9 +62,20 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
+    public List<Post> getPost() {
+        return loadJSON();
+    }
+
+    @Override
     public void addPost(Post post) {
         List<Post> postList = loadJSON();
         postList.add(post);
         writeJSON(postList);
+    }
+
+    @Override
+    public List<Post> sellerPosts(int idUser) {
+        List<Post> postList = loadJSON();
+        return postList.stream().filter(post -> post.getUserId() == idUser).collect(Collectors.toList());
     }
 }

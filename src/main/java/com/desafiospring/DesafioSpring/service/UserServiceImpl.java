@@ -28,8 +28,19 @@ public class UserServiceImpl implements UserService{
         return i;
     }
 
+    private boolean orderUserList(ArrayList<UserInfoDTO> userList, String order){
+        if(order.equals("name_asc")) {
+            userList.sort((o1, o2) -> o1.getUserName().compareTo(o2.getUserName()));
+        }else if(order.equals("name_desc")){
+            userList.sort((o1, o2) -> o2.getUserName().compareTo(o1.getUserName()));
+        }else{
+            return false;
+        }
+        return true;
+    }
+
     @Override
-    public ResponseEntity<String> followSeller(int idUser, int idSeller) {
+    public ResponseEntity followSeller(int idUser, int idSeller) {
 
         User user = userRepository.getUser(idUser);
         User userSeller = userRepository.getUser(idSeller);
@@ -45,7 +56,6 @@ public class UserServiceImpl implements UserService{
             return new ResponseEntity<>("Usuário já segue esse vendedor.", HttpStatus.OK);
 
         user.getFollowingList().add(idSeller);
-        System.out.println(user.getFollowingList());
         userRepository.updateUser(user);
         return new ResponseEntity<>(user.getUserName() + " passou a seguir " + userSeller.getUserName(), HttpStatus.OK);
     }
@@ -69,7 +79,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public ResponseEntity followersList(int idUser) {
+    public ResponseEntity followersList(int idUser, String order) {
         User user = userRepository.getUser(idUser);
         List<User> usersList = userRepository.getUsers();
 
@@ -89,13 +99,19 @@ public class UserServiceImpl implements UserService{
             userList.add(new UserInfoDTO(u.getUserId(), u.getUserName()));
         }
 
+        if(order != null){
+            if(!orderUserList(userList, order)){
+                return new ResponseEntity<String>("Valor do parâmetro 'order' inválido. Insira 'name_asc' ou 'name_desc'.", HttpStatus.BAD_REQUEST);
+            }
+        }
+
         followersListDTO.setFollowers(userList);
 
         return new ResponseEntity<FollowersListDTO>(followersListDTO, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity followedList(int idUser) {
+    public ResponseEntity followedList(int idUser, String order) {
         User user = userRepository.getUser(idUser);
         List<User> usersList = userRepository.getUsers();
 
@@ -112,8 +128,36 @@ public class UserServiceImpl implements UserService{
             userList.add(new UserInfoDTO(auxUser.getUserId(), auxUser.getUserName()));
         }
 
+        if(order != null){
+            if(!orderUserList(userList, order)){
+                return new ResponseEntity<String>("Valor do parâmetro 'order' inválido. Insira 'name_asc' ou 'name_desc'.", HttpStatus.BAD_REQUEST);
+            }
+        }
+
         followedListDTO.setFollowed(userList);
 
         return new ResponseEntity<FollowedListDTO>(followedListDTO, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity unfollowSeller(int idUser, int idSeller) {
+
+        User user = userRepository.getUser(idUser);
+        User userSeller = userRepository.getUser(idSeller);
+
+        if(userSeller == null)
+            return new ResponseEntity<>("Nenhum vendendor encontrado com o ID "+ idSeller, HttpStatus.BAD_REQUEST);
+        if(user == null)
+            return new ResponseEntity<>("Nenhum usuário encontrado com o ID "+ idUser, HttpStatus.BAD_REQUEST);
+        if(!userSeller.getSeller()){
+            return new ResponseEntity<>("O usuário com ID " + idSeller + " não é um vendedor. Usuários podem seguir apenas vendedores.", HttpStatus.BAD_REQUEST);
+        }
+        if(userHasFollowedAlready(user, idSeller) == null)
+            return new ResponseEntity<>("Usuário não segue esse vendedor.", HttpStatus.OK);
+        System.out.println("passei");
+        user.getFollowingList().remove(Integer.valueOf(idSeller));
+        System.out.println("não passei");
+        userRepository.updateUser(user);
+        return new ResponseEntity<>(user.getUserName() + " deixou de seguir " + userSeller.getUserName(), HttpStatus.OK);
     }
 }

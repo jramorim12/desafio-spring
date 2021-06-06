@@ -20,10 +20,17 @@ public class UserController {
     }
 
     @PostMapping("/users/{userId}/follow/{userIdToFollow}")
-    public ResponseEntity<String> followSeller(@PathVariable int userId, @PathVariable int userIdToFollow){
+    public ResponseEntity followSeller(@PathVariable int userId, @PathVariable int userIdToFollow){
         if(userId == userIdToFollow)
             return new ResponseEntity("Um usuário não pode se seguir.",HttpStatus.BAD_REQUEST);
         return userService.followSeller(userId, userIdToFollow);
+    }
+
+    @PostMapping("/users/{userId}/unfollow/{userIdToUnfollow}")
+    public ResponseEntity unfollowSeller(@PathVariable int userId, @PathVariable int userIdToUnfollow){
+        if(userId == userIdToUnfollow)
+            return new ResponseEntity("Usuários não podem podem possuir mesmo ID.",HttpStatus.BAD_REQUEST);
+        return userService.unfollowSeller(userId, userIdToUnfollow);
     }
 
     @GetMapping("/users/{userId}/followers/count/")
@@ -31,14 +38,14 @@ public class UserController {
         return userService.followersCounter(userId);
     }
 
-    @GetMapping("/users/{userId}/followers/list")
-    public ResponseEntity followersList(@PathVariable int userId){
-        return userService.followersList(userId);
+    @GetMapping("users/{userId}/followers/list")
+    public ResponseEntity followersList(@PathVariable int userId, @RequestParam(value = "", required=false) String order){
+        return userService.followersList(userId, order);
     }
 
     @GetMapping("/users/{userId}/followed/list")
-    public ResponseEntity followedList(@PathVariable int userId){
-        return userService.followedList(userId);
+    public ResponseEntity followedList(@PathVariable int userId, @RequestParam(value = "", required=false) String order){
+        return userService.followedList(userId, order);
     }
 
 }
