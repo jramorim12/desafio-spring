@@ -1,5 +1,6 @@
 package com.desafiospring.DesafioSpring.controller;
 
+import com.desafiospring.DesafioSpring.dtos.PostDTO;
 import com.desafiospring.DesafioSpring.models.Post;
 import com.desafiospring.DesafioSpring.service.PostService;
 import org.springframework.http.HttpStatus;
@@ -26,13 +27,13 @@ public class PostController {
     }
 
     @PostMapping("/products/newpost")
-    public ResponseEntity followedList(@RequestBody Post post){
+    public ResponseEntity followedList(@RequestBody PostDTO post){
         return postService.addPost(post);
     }
 
 
     @PostMapping("products/newpromopost")
-    public ResponseEntity addPost(@RequestBody Post post){
+    public ResponseEntity addPost(@RequestBody PostDTO post){
         return postService.addPost(post);
     }
 

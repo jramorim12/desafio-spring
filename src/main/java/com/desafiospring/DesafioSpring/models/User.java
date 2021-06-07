@@ -1,11 +1,13 @@
 package com.desafiospring.DesafioSpring.models;
 
+import com.desafiospring.DesafioSpring.dtos.FollowedListDTO;
+
 import java.util.ArrayList;
 
 public class User {
     private int userId;
     private String userName;
-    private ArrayList<Integer> followingList;
+    private ArrayList<Integer> followingList = new ArrayList<>();
     private Boolean seller;
 
     public User(int userId, String userName, ArrayList<Integer> followingList, Boolean seller) {

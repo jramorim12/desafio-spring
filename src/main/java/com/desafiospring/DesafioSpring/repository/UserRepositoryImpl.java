@@ -8,6 +8,7 @@ import com.desafiospring.DesafioSpring.models.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,6 +51,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User getUser(int id){
         List<User> userList = loadJSON();
+        if(userList == null)
+            return null;
         User user = userList.stream().filter(u -> u.getUserId() == id).findFirst().orElse(null);
         return user;
     }
@@ -68,6 +71,9 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void addUser(User user) {
         List<User> listaUser = loadJSON();
+        if(listaUser == null){
+            listaUser = new ArrayList<>();
+        }
         listaUser.add(user);
         writeJSON(listaUser);
     }

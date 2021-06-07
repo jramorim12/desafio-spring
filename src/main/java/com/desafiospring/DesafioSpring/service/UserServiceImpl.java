@@ -160,4 +160,17 @@ public class UserServiceImpl implements UserService{
         userRepository.updateUser(user);
         return new ResponseEntity<>(user.getUserName() + " deixou de seguir " + userSeller.getUserName(), HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity addUser(User user) {
+        if(userRepository.getUser(user.getUserId()) != null)
+            return new ResponseEntity<String>("Já existe um usuário com esse ID.", HttpStatus.BAD_REQUEST);
+        if(user.getFollowingList() == null){
+            user.setFollowingList(new ArrayList<>());
+        }
+        userRepository.addUser(user);
+
+        return new ResponseEntity<String>("Usuário inserido com sucesso.", HttpStatus.BAD_REQUEST);
+
+    }
 }

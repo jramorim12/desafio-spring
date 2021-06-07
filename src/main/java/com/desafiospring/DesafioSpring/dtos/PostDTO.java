@@ -1,46 +1,45 @@
-package com.desafiospring.DesafioSpring.models;
+package com.desafiospring.DesafioSpring.dtos;
 
+import com.desafiospring.DesafioSpring.models.Product;
 import com.desafiospring.DesafioSpring.utils.CustomJsonDateDeserializer;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Post {
+public class PostDTO {
+
     private int id_post;
     private int userId;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date date;
-    private int productId;
+    private Product detail;
     private int category;
     private double price;
     private boolean hasPromo = false;
     private double discount = 0.0;
 
-    public Post(int id_post, int userId, Date date, int productId, int category, double price, boolean hasPromo, double discount) {
+    public PostDTO(int id_post, int userId, Date date, Product detail, int category, double price, boolean hasPromo, double discount) {
         this.id_post = id_post;
         this.userId = userId;
         this.date = date;
-        this.productId = productId;
+        this.detail = detail;
         this.category = category;
         this.price = price;
         this.hasPromo = hasPromo;
         this.discount = discount;
     }
 
-    public int getProductId() {
-        return productId;
+    public Product getDetail() {
+        return detail;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setDetail(Product detail) {
+        this.detail = detail;
     }
 
-    public Post() {}
+    public PostDTO() {}
 
     public int getId_post() {
         return id_post;

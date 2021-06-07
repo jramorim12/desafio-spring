@@ -7,9 +7,9 @@ import java.util.List;
 public class SellerPromoPostsDTO {
     private int userId;
     private String userName;
-    private List<Post> posts;
+    private List<PostDTO> posts;
 
-    public SellerPromoPostsDTO(int userId, String userName, List<Post> posts) {
+    public SellerPromoPostsDTO(int userId, String userName, List<PostDTO> posts) {
         this.userId = userId;
         this.userName = userName;
         this.posts = posts;
@@ -33,11 +33,11 @@ public class SellerPromoPostsDTO {
         this.userName = userName;
     }
 
-    public List<Post> getPosts() {
+    public List<PostDTO> getPosts() {
         return posts;
     }
 
-    public void setPosts(List<Post> posts) {
+    public void setPosts(List<PostDTO> posts) {
         this.posts = posts;
     }
 }

@@ -1,6 +1,7 @@
 package com.desafiospring.DesafioSpring.service;
 
 import com.desafiospring.DesafioSpring.dtos.FollowersCounterDTO;
+import com.desafiospring.DesafioSpring.models.User;
 import org.springframework.http.ResponseEntity;
 
 public interface UserService {
@@ -10,6 +11,7 @@ public interface UserService {
     ResponseEntity followersList(int idUser, String order);
     ResponseEntity followedList(int idUser, String order);
     ResponseEntity unfollowSeller(int idUser, int idSeller);
+    ResponseEntity addUser(User user);
 
 
 }

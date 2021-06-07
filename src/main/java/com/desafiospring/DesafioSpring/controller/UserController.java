@@ -1,5 +1,6 @@
 package com.desafiospring.DesafioSpring.controller;
 
+import com.desafiospring.DesafioSpring.models.User;
 import com.desafiospring.DesafioSpring.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,11 @@ public class UserController {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleExcpetion(Exception e){
         return new ResponseEntity(e.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("/users/add")
+    public ResponseEntity addUser(@RequestBody User user){
+        return userService.addUser(user);
     }
 
     @PostMapping("/users/{userId}/follow/{userIdToFollow}")

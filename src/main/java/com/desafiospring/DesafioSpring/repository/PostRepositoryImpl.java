@@ -10,6 +10,7 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +22,6 @@ public class PostRepositoryImpl implements PostRepository {
     private List<Post> loadJSON() {
         File file = new File(pathPost);
         List<Post> lista = null;
-
         if(file.length() > 0) {
             ObjectMapper objectMapper = new ObjectMapper();
             TypeReference<List<Post>> typeReference = new TypeReference<>(){};
@@ -52,6 +52,8 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public Post getPost(int id) {
         List<Post> postList = loadJSON();
+        if (postList == null)
+            return null;
         Post post = postList.stream().filter(p -> p.getId_post() == id).findFirst().orElse(null);
         return post;
     }
@@ -64,6 +66,8 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public void addPost(Post post) {
         List<Post> postList = loadJSON();
+        if(postList == null)
+            postList = new ArrayList<>();
         postList.add(post);
         writeJSON(postList);
     }
@@ -71,6 +75,8 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public List<Post> sellerPosts(int idUser) {
         List<Post> postList = loadJSON();
+        if(postList == null)
+            return null;
         return postList.stream().filter(post -> post.getUserId() == idUser).collect(Collectors.toList());
     }
 }

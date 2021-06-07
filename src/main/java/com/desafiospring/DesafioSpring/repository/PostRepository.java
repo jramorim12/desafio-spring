@@ -1,7 +1,6 @@
 package com.desafiospring.DesafioSpring.repository;
 
 import com.desafiospring.DesafioSpring.models.Post;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

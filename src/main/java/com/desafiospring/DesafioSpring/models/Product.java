@@ -6,15 +6,15 @@ public class Product {
     private String type;
     private String brand;
     private String color;
-    private String note;
+    private String notes;
 
-    public Product(int product_id, String productName, String type, String brand, String color, String note) {
+    public Product(int product_id, String productName, String type, String brand, String color, String notes) {
         this.product_id = product_id;
         this.productName = productName;
         this.type = type;
         this.brand = brand;
         this.color = color;
-        this.note = note;
+        this.notes = notes;
     }
 
     public Product() {}
@@ -59,11 +59,11 @@ public class Product {
         this.color = color;
     }
 
-    public String getNote() {
-        return note;
+    public String getNotes() {
+        return notes;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setNote(String notes) {
+        this.notes = notes;
     }
 }

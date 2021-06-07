@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 public class FollowedSellersPostDTO {
     private int userId;
-    private ArrayList<Post> posts;
+    private ArrayList<PostDTO> posts;
 
-    public FollowedSellersPostDTO(int userId, ArrayList<Post> posts) {
+    public FollowedSellersPostDTO(int userId, ArrayList<PostDTO> posts) {
         this.userId = userId;
         this.posts = posts;
     }
@@ -23,11 +23,11 @@ public class FollowedSellersPostDTO {
         this.userId = userId;
     }
 
-    public ArrayList<Post> getPosts() {
+    public ArrayList<PostDTO> getPosts() {
         return posts;
     }
 
-    public void setPosts(ArrayList<Post> posts) {
+    public void setPosts(ArrayList<PostDTO> posts) {
         this.posts = posts;
     }
 }
