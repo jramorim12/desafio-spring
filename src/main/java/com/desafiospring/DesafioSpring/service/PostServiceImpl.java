@@ -1,7 +1,6 @@
 package com.desafiospring.DesafioSpring.service;
 
 import com.desafiospring.DesafioSpring.dtos.FollowedSellersPostDTO;
-import com.desafiospring.DesafioSpring.dtos.FollowersCounterDTO;
 import com.desafiospring.DesafioSpring.dtos.PromoPostCounterDTO;
 import com.desafiospring.DesafioSpring.dtos.SellerPromoPostsDTO;
 import com.desafiospring.DesafioSpring.models.Post;
@@ -12,9 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.logging.SimpleFormatter;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,11 +24,19 @@ public class PostServiceImpl implements PostService{
         this.userRepository = userRepository;
     }
 
+    private void zeroTime(Calendar calendar){
+        calendar.set( Calendar.HOUR_OF_DAY, 0 );
+        calendar.set( Calendar.MINUTE, 0 );
+        calendar.set( Calendar.SECOND, 0 );
+        calendar.set( Calendar.MILLISECOND, 0 );
+    }
+
+
     private boolean orderPostList(List<Post> postsList, String order){
         if(order.equals("date_asc")) {
-            postsList.sort((o1, o2) -> o1.returnDate().compareTo(o2.returnDate()));
+            postsList.sort((o1, o2) -> o1.getDate().compareTo(o2.getDate()));
         }else if(order.equals("date_desc")){
-            postsList.sort((o1, o2) -> o2.returnDate().compareTo(o1.returnDate()));
+            postsList.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
         }else{
             return false;
         }
@@ -60,10 +65,7 @@ public class PostServiceImpl implements PostService{
     public ResponseEntity getFollowedSellersPosts(int idUser, String order) {
         User user = userRepository.getUser(idUser);
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+        zeroTime(calendar);
         Date nowDate = calendar.getTime();
         calendar.add(Calendar.DATE, -14);
         Date twoWeekAgoDate = calendar.getTime();
@@ -75,14 +77,14 @@ public class PostServiceImpl implements PostService{
         for(Integer id : user.getFollowingList()){
             postsList.addAll(postRepository.sellerPosts(id));
         }
-        postsList = postsList.stream().filter(p -> nowDate.compareTo(p.returnDate()) * p.returnDate().compareTo(twoWeekAgoDate) > -1 ).collect(Collectors.toList());
+        postsList = postsList.stream().filter(p -> nowDate.compareTo(p.getDate()) * p.getDate().compareTo(twoWeekAgoDate) > -1 ).collect(Collectors.toList());
 
         if(order != null){
             if(!orderPostList(postsList, order)){
                 return new ResponseEntity<String>("Valor do parâmetro 'order' inválido. Insira 'name_asc' ou 'name_desc'.", HttpStatus.BAD_REQUEST);
             }
         }else{
-            postsList.sort((o1, o2) -> o2.returnDate().compareTo(o1.returnDate()));
+            postsList.sort((o1, o2) -> o2.getDate().compareTo(o1.getDate()));
         }
 
         FollowedSellersPostDTO followedSellersPostDTO = new FollowedSellersPostDTO(idUser, (ArrayList<Post>) postsList);

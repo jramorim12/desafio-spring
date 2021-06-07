@@ -16,15 +16,11 @@ import java.util.stream.Collectors;
 @Repository
 public class PostRepositoryImpl implements PostRepository {
 
-    private List<Post> loadJSON() {
-        File file = null;
-        List<Post> lista = null;
+    private final String pathPost = "./src/main/java/com/desafiospring/DesafioSpring/json/post.json";
 
-        try{
-            file = ResourceUtils.getFile("classpath:post.json");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    private List<Post> loadJSON() {
+        File file = new File(pathPost);
+        List<Post> lista = null;
 
         if(file.length() > 0) {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -42,8 +38,7 @@ public class PostRepositoryImpl implements PostRepository {
 
     private void writeJSON(List<Post> lista){
         try {
-            File file = null;
-            file = ResourceUtils.getFile("classpath:post.json");
+            File file = new File(pathPost);
             TypeReference<List<Post>> typeReference = new TypeReference<>(){};
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writeValue(file, lista);

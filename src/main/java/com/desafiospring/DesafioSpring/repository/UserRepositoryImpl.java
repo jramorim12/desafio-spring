@@ -14,15 +14,11 @@ import java.util.stream.Collectors;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
-    private List<User> loadJSON() {
-        File file = null;
-        List<User> lista = null;
+    private final String pathUser = "./src/main/java/com/desafiospring/DesafioSpring/json/user.json";
 
-        try{
-            file = ResourceUtils.getFile("classpath:user.json");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    private List<User> loadJSON() {
+        File file = new File(pathUser);
+        List<User> lista = null;
 
         if(file.length() > 0) {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -40,8 +36,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     private void writeJSON(List<User> lista){
         try {
-            File file = null;
-            file = ResourceUtils.getFile("classpath:user.json");
+            File file = new File(pathUser);
             TypeReference<List<User>> typeReference = new TypeReference<>(){};
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.writeValue(file, lista);

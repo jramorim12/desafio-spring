@@ -154,9 +154,9 @@ public class UserServiceImpl implements UserService{
         }
         if(userHasFollowedAlready(user, idSeller) == null)
             return new ResponseEntity<>("Usuário não segue esse vendedor.", HttpStatus.OK);
-        System.out.println("passei");
+
         user.getFollowingList().remove(Integer.valueOf(idSeller));
-        System.out.println("não passei");
+
         userRepository.updateUser(user);
         return new ResponseEntity<>(user.getUserName() + " deixou de seguir " + userSeller.getUserName(), HttpStatus.OK);
     }

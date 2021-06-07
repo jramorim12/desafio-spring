@@ -1,6 +1,7 @@
 package com.desafiospring.DesafioSpring.models;
 
 import com.desafiospring.DesafioSpring.utils.CustomJsonDateDeserializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -49,12 +50,8 @@ public class Post {
         this.userId = userId;
     }
 
-    public String getDate() {
-        DateFormat formatter = new SimpleDateFormat("dd-MM-yyy");
-        return formatter.format(date);
-    }
-
-    public Date returnDate() {
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    public Date getDate() {
         return date;
     }
 
