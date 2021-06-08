@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "079b1658-cb8c-4588-8eb4-ea54dc7c9d0e",
-		"name": "Desafio Spring - Meli Social",
+		"_postman_id": "b4e15adc-0e93-496e-a2b6-5fbf26f34124",
+		"name": "Desafio Spring - Meli Social Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -75,14 +75,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/users/2/followed/list",
+					"raw": "localhost:8080/users/1/followed/list",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"users",
-						"2",
+						"1",
 						"followed",
 						"list"
 					]
@@ -97,7 +97,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"userId\": 2,\n    \"id_post\" : 1,\n    \"date\" : \"01-06-2021\",\n    \"detail\" :\n        { \"product_id\" : 1,\n        \"productName\" : \"Produto 08\",\n        \"type\" : \"Gamer\",\n        \"brand\" : \"Marca de Produto 08\",\n        \"color\" : \"Red & Black\",\n        \"notes\" : \"Special Edition\"\n        },\n    \"category\" : 50,\n    \"price\" : 800.50\n}",
+					"raw": "{\n    \"userId\": 2,\n    \"id_post\" : 9,\n    \"date\" : \"01-06-2021\",\n    \"detail\" :\n        { \"product_id\" : 9,\n        \"productName\" : \"Produto 08\",\n        \"type\" : \"Gamer\",\n        \"brand\" : \"Marca de Produto 08\",\n        \"color\" : \"Red & Black\",\n        \"notes\" : \"Special Edition\"\n        },\n    \"category\" : 50,\n    \"price\" : 800.50\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -356,14 +356,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/products/3/countPromo/",
+					"raw": "localhost:8080/products/2/countPromo/",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"products",
-						"3",
+						"2",
 						"countPromo",
 						""
 					]
@@ -377,14 +377,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/products/3/list/",
+					"raw": "localhost:8080/products/2/list/",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"products",
-						"3",
+						"2",
 						"list",
 						""
 					]
@@ -397,8 +397,21 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userId\" : \"5\",\n    \"userName\" : \"Usuário 05\",\n    \"seller\" : false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "/users/add",
+					"raw": "localhost:8080/users/add",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
 					"path": [
 						"users",
 						"add"
